@@ -1,14 +1,18 @@
-
+import Header from "@/app/ui/header";
+import Footer from "@/app/ui/footer"; 
+import "@/app/globals.css";
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <Header />
+        <main className="page-content">{children}</main>
+        <Footer /> 
       </body>
     </html>
   );
