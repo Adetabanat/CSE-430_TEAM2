@@ -23,7 +23,7 @@ model User {
   name         String
   password     String
   accountType  AccountType @default(BASIC)  // BASIC, SELLER, ADMIN
-  about_me     String
+  about_me     String?
   products     Product[]   // Products added by user (e.g. SELLER)
   ratings      Rating[]    // Ratings left by user
   createdAt    DateTime  @default(now())

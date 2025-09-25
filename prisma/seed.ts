@@ -98,19 +98,19 @@ async function main() {
   await prisma.rating.createMany({
     data: [
       {
-        score: 5,
+        rating: 5,
         comment: "Absolutely beautiful and well made!",
         userId: basicUser.id,
         productId: bowlSet.id,
       },
       {
-        score: 5,
+        rating: 5,
         comment: "Amazing craftsmanship. Love it!",
         userId: basicUser.id,
         productId: woodAnimals.id,
       },
       {
-        score: 4,
+        rating: 4,
         comment: "Very nice quality, but delivery was slow.",
         userId: basicUser.id,
         productId: silverJewelry.id,
