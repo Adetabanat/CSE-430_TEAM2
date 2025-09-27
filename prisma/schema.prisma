@@ -9,3 +9,33 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  name     String?
+  reviews  Review[]
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  reviews     Review[]
+  createdAt   DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-5 stars
+  comment   String   // Written review text
+  userId    String
+  productId String
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, productId]) // One review per user per product
+}
