@@ -10,7 +10,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-<<<<<// Enum for user account types
+// Enum for user account types
 enum AccountType {
   BASIC
   SELLER
