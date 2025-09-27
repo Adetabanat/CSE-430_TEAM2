@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
   
   try {
     const reviews = await prisma.review.findMany({
-      where: { productId },
+      where: { productId: parseInt(productId) },
       include: {
         user: { select: { name: true } }
       },
