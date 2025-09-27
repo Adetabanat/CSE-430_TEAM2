@@ -6,10 +6,10 @@ import { FaSearch, FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
 
 const navlinks = [
   { name: "Home", path: "/" },
-  { name: "Products", path: "/ui/product" },
-  { name: "About", path: "/ui/about" },
-  { name: "Categories", path: "/ui/categories" },
-  { name: "Contact", path: "/ui/contact" },
+  { name: "Products", path: "/product" },
+  { name: "About", path: "/about" },
+  { name: "Categories", path: "/categories" },
+  { name: "Contact", path: "/contact" },
 ];
 
 export default function Header() {
@@ -39,7 +39,7 @@ export default function Header() {
 
       <div className="header-icons">
         <Link
-          href="/ui/search"
+          href="/search"
           className="icon"
           aria-label="Search"
           title="Search"
@@ -47,7 +47,7 @@ export default function Header() {
           <FaSearch />
         </Link>
         <Link
-          href="/ui/favorites"
+          href="/favorites"
           className="icon"
           aria-label="Favorites"
           title="Favorites"
@@ -55,7 +55,7 @@ export default function Header() {
           <FaHeart />
         </Link>
         <Link
-          href="/ui/cart"
+          href="/cart"
           className="icon cart-icon"
           aria-label="Shopping Cart"
           title="Shopping Cart"
@@ -64,7 +64,7 @@ export default function Header() {
           <span className="cart-count">0</span>
         </Link>
         <Link
-          href="/ui/login"
+          href="/login"
           className="icon"
           aria-label="User Account"
           title="Account"

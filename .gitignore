@@ -43,3 +43,8 @@ next-env.d.ts
 /src/generated/prisma
 
 cse430-handcrafted-haven/
+
+# Project-specific files that should not be committed to GitHub
+project_requirements.md
+team_guide.md
+user_stories.md
