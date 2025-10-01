@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* Handcrafted Haven Color Palette */
   --color-primary: #8D6E63;   /* warm brown – natural wood feel */

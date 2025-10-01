@@ -1,28 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [formData, setFormData] = useState({
     email: "",
+    name: "",
     password: "",
+    confirmPassword: "",
+    accountType: "BASIC" as "BASIC" | "SELLER",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const urlMessage = searchParams.get("message");
-    if (urlMessage) {
-      setMessage(urlMessage);
-    }
-  }, [searchParams]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -34,23 +28,34 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          email: formData.email,
+          name: formData.name,
+          password: formData.password,
+          accountType: formData.accountType,
+        }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Login failed");
+        throw new Error(data.error || "Registration failed");
       }
 
-      // Login successful, redirect to home or profile
-      router.push("/profile");
+      // Registration successful, redirect to login
+      router.push("/login?message=Registration successful! Please log in.");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -87,15 +92,15 @@ export default function LoginPage() {
             color: '#333',
             fontWeight: 'bold'
           }}>
-            Sign in to your account
+            Create your account
           </h2>
           <p style={{ margin: '0', color: '#666', fontSize: '0.9rem' }}>
             Or{" "}
             <Link
-              href="/signup"
+              href="/login"
               style={{ color: '#8B4513', textDecoration: 'none', fontWeight: '500' }}
             >
-              create a new account
+              sign in to your existing account
             </Link>
           </p>
         </div>
@@ -108,20 +113,6 @@ export default function LoginPage() {
           padding: '2rem'
         }}>
           <form onSubmit={handleSubmit}>
-            {message && (
-              <div style={{
-                backgroundColor: '#d4edda',
-                color: '#155724',
-                padding: '0.75rem 1rem',
-                borderRadius: '4px',
-                border: '1px solid #c3e6cb',
-                marginBottom: '1rem',
-                fontSize: '0.9rem'
-              }}>
-                {message}
-              </div>
-            )}
-            
             {error && (
               <div style={{
                 backgroundColor: '#f8d7da',
@@ -136,6 +127,29 @@ export default function LoginPage() {
               </div>
             )}
             
+            <div style={{ marginBottom: '1rem' }}>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Full name"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  fontSize: '0.9rem',
+                  boxSizing: 'border-box',
+                  outline: 'none'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#8B4513'}
+                onBlur={(e) => e.target.style.borderColor = '#ddd'}
+              />
+            </div>
+
             <div style={{ marginBottom: '1rem' }}>
               <input
                 id="email"
@@ -159,7 +173,7 @@ export default function LoginPage() {
               />
             </div>
 
-            <div style={{ marginBottom: '1.5rem' }}>
+            <div style={{ marginBottom: '1rem' }}>
               <input
                 id="password"
                 name="password"
@@ -182,6 +196,53 @@ export default function LoginPage() {
               />
             </div>
 
+            <div style={{ marginBottom: '1rem' }}>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                required
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm password"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  fontSize: '0.9rem',
+                  boxSizing: 'border-box',
+                  outline: 'none'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#8B4513'}
+                onBlur={(e) => e.target.style.borderColor = '#ddd'}
+              />
+            </div>
+
+            <div style={{ marginBottom: '1.5rem' }}>
+              <select
+                id="accountType"
+                name="accountType"
+                value={formData.accountType}
+                onChange={handleChange}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  fontSize: '0.9rem',
+                  boxSizing: 'border-box',
+                  outline: 'none',
+                  backgroundColor: 'white'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#8B4513'}
+                onBlur={(e) => e.target.style.borderColor = '#ddd'}
+              >
+                <option value="BASIC">Basic User</option>
+                <option value="SELLER">Seller</option>
+              </select>
+            </div>
+
             <button
               type="submit"
               disabled={loading}
@@ -194,28 +255,11 @@ export default function LoginPage() {
                 borderRadius: '4px',
                 fontSize: '0.9rem',
                 fontWeight: '500',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                marginBottom: '1rem'
+                cursor: loading ? 'not-allowed' : 'pointer'
               }}
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? "Creating account..." : "Sign up"}
             </button>
-
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem 0',
-              borderTop: '1px solid #eee',
-              marginTop: '1rem'
-            }}>
-              <p style={{ 
-                margin: '0', 
-                fontSize: '0.8rem', 
-                color: '#888',
-                fontStyle: 'italic'
-              }}>
-                Test account: jane@example.com / hashedpassword123
-              </p>
-            </div>
           </form>
         </div>
       </div>

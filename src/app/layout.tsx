@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning={true}>
         <Header />
         <main className="page-content">{children}</main>
         <Footer /> 

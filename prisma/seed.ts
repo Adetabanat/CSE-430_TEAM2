@@ -94,8 +94,8 @@ async function main() {
     },
   });
 
-  // Seed ratings
-  await prisma.rating.createMany({
+  // Seed reviews
+  await prisma.review.createMany({
     data: [
       {
         rating: 5,

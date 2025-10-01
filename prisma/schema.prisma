@@ -25,7 +25,8 @@ model User {
   accountType  AccountType @default(BASIC)  // BASIC, SELLER, ADMIN
   about_me     String?
   products     Product[]   // Products added by user (e.g. SELLER)
-  ratings      Rating[]    // Ratings left by user
+  reviews      Review[]    // Reviews left by user
+  sellerProfile SellerProfile?  // Optional seller profile
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
@@ -41,13 +42,13 @@ model Product {
 
   user        User       @relation(fields: [userId], references: [id])
   category    Category   @relation(fields: [categoryId], references: [id])
-  ratings     Rating[]   // A Product's ratings
+  reviews     Review[]   // A Product's reviews
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
 
-model Rating {
+model Review {
   id        Int      @id @default(autoincrement())
   rating    Int     
   comment   String?  //Not required
@@ -64,4 +65,17 @@ model Category {
   id        Int       @id @default(autoincrement())
   name      String    @unique
   products  Product[] // Products in each Category
+}
+
+model SellerProfile {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @unique
+  shopName    String
+  description String?
+  location    String?
+  
+  user        User      @relation(fields: [userId], references: [id])
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
