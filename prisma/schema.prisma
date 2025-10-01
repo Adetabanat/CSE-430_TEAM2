@@ -62,6 +62,8 @@ model Rating {
   createdAt DateTime @default(now())
 }
 
+
+
 model Review {
   id        Int      @id @default(autoincrement())
   rating    Int      // 1-5 stars
