@@ -1,22 +1,16 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "postgresql"
   url      = env("PRISMA_DATABASE_URL")
 }
-
 generator client {
   provider = "prisma-client-js"
 }
-
 // Enum for user account types
 enum AccountType {
   BASIC
   SELLER
   ADMIN
 }
-
 model User {
   id           Int       @id @default(autoincrement())
   email        String    @unique
@@ -25,11 +19,11 @@ model User {
   accountType  AccountType @default(BASIC)  // BASIC, SELLER, ADMIN
   about_me     String?
   products     Product[]   // Products added by user (e.g. SELLER)
-  ratings      Rating[]    // Ratings left by user
+  reviews      Review[]    // Reviews left by user
+  sellerProfile SellerProfile?  // Optional seller profile
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
-
 model Product {
   id          Int       @id @default(autoincrement())
   name        String
@@ -38,30 +32,34 @@ model Product {
   image       String    // Href or URL to image
   userId      Int
   categoryId  Int
-
   user        User       @relation(fields: [userId], references: [id])
   category    Category   @relation(fields: [categoryId], references: [id])
-  ratings     Rating[]   // A Product's ratings
-
+  reviews     Review[]   // A Product's reviews
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
-
-model Rating {
+model Review {
   id        Int      @id @default(autoincrement())
-  rating    Int     
+  rating    Int    
   comment   String?  //Not required
   userId    Int
   productId Int
-
   user      User     @relation(fields: [userId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
-
   createdAt DateTime @default(now())
 }
-
 model Category {
   id        Int       @id @default(autoincrement())
   name      String    @unique
   products  Product[] // Products in each Category
+}
+model SellerProfile {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @unique
+  shopName    String
+  description String?
+  location    String?
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

@@ -65,7 +65,7 @@ async function main() {
         "This ceramic set is made from high-quality materials, and each item is shaped and glazed by hand, making every piece one of a kind.",
       price: 49.99,
       image: "/ceramic-bowls.webp",
-      userId: jane.id,
+      sellerId: jane.id,
       categoryId: ceramicsCategory.id,
     },
   });
@@ -77,7 +77,7 @@ async function main() {
         "Celebrate the beauty of nature and craftsmanship with this exquisite hand-carved wooden animal set.",
       price: 35.21,
       image: "/animal-wood.webp",
-      userId: john.id,
+      sellerId: john.id,
       categoryId: woodCraftsCategory.id,
     },
   });
@@ -89,7 +89,7 @@ async function main() {
         "From delicate chains and minimalist rings to statement earrings, each piece is crafted from high-quality 925 sterling silver.",
       price: 156.99,
       image: "/jewelry.webp",
-      userId: sarah.id,
+      sellerId: sarah.id,
       categoryId: jewelryCategory.id,
     },
   });
