@@ -1,4 +1,4 @@
-import FeaturedProducts from "./ui/featured";
+import FeaturedProducts from "./ui/products/featured";
 
 export default function HomePage() {
   return (

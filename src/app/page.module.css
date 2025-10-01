@@ -61,6 +61,7 @@
 .featuredcard {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex: 1;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.675);
   border-radius: 0.5rem;
@@ -73,23 +74,63 @@
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
   }
-  p,
-  h3,
-  .addToCart {
-    margin: 0.5rem 0.5rem;
+  .productInfo {
+    margin: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    :first-child {
+      flex: 3;
+    }
+    :nth-child(2) {
+      flex: 1;
+    }
+    :nth-child(3) {
+      flex: 2;
+    }
   }
+
+   .prodcutInfo :first-child {
+    flex: 3;
+  }
+
+  .prodcutInfo :nth-child(2) {
+    flex: 1;
+  }
+
+   .prodcutInfo :nth-child(3) {
+    flex: 2;
+  }
+
   h3 {
     margin-bottom: 0;
   }
-  .addToCart {
+  .productButton {
     max-width: 150px;
     align-self: center;
     background-color: rgb(237, 237, 237);  
     border: 1px solid lightgrey;
   }
-  .addToCart:hover {
+  .productButton:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.147);
+  }
+  .cardPrice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    :nth-child(2) {
+      flex: 2;
+    }
+  }
+  .link {
+    text-align: center;
+    padding-bottom: .5rem;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+  .link:hover {
+    font-weight: 700;
   }
 }
 
